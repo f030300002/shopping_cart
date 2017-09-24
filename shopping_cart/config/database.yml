@@ -1,0 +1,23 @@
+development: &default
+  adapter: postgresql
+  host: 127.0.0.1
+  port: 5432
+  database: shopping_cart
+  username: tony
+  pool: 12
+
+production: &default
+  adapter: postgresql
+  host: 127.0.0.1
+  port: 5432
+  database: shopping_cart
+  username: tony
+  pool: 12
+
+test: &test
+  adapter: postgresql
+  database: shopping_cart_test<%= ENV['TEST_ENV_NUMBER'] %>
+
+# production:
+#   <<: *default
+#   database: kayla_production

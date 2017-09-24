@@ -1,0 +1,22 @@
+%h1 New Product
+.form
+  = form_for @product, method: 'POST' do |f|
+    - if @product.errors.any?
+      - @product.errors.full_messages.each do |err|
+        #err-li= err
+    %p
+      .label='* Name'
+      =f.text_field :name
+    %p
+      =f.label :description
+      =f.text_area :description
+    %p
+      .label='* Price'
+      =f.text_field :price
+    %p
+      =f.label :image
+      =f.text_field :image_url
+
+    %p=f.submit 'Create'
+
+%p=link_to 'Back', products_path

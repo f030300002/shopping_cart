@@ -1,0 +1,28 @@
+%h1 Products
+%table
+  %tr
+    %td
+    %td
+      %h3 name
+    %td
+      %h3 description
+    %td
+      %h3 price
+  - if @products.present?
+    - @products.each do |product|
+      %tr
+        %td
+          /=image_tag product.image_url
+        %td
+          %h3=link_to product.name, product
+        %td
+          %h3= product.description
+        %td
+          %h3= product.price
+        %td=link_to 'Show', product
+        %td=link_to 'Edit', edit_product_path(product)
+        %td=link_to 'Delete'
+  - else
+    %tr
+      %td.text-center{colspan:7} No user log history
+=link_to 'Create New Product', new_product_path
