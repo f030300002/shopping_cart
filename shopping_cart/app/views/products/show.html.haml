@@ -1,28 +1,32 @@
-%h1 Product
-%table
-  - if @product.present?
-    %thead
+.panel
+  %h1 Product
+  - if flash.present?
+    - flash.each do |msg|
+      .content_tag=msg
+  %table
+    - if @product.present?
+      %thead
+        %tr
+          %th
+            name
+          %th
+            description
+          %th
+            price
+      %tbody
+        %tr
+          %td
+            = @product.name
+          %td
+            = @product.description
+          %td
+            = @product.price
+          %td
+            =link_to 'Back', products_path
+          %td
+            =link_to 'Edit', edit_product_path(@product)
+          %td
+            =link_to 'Delete', product_path(@product), method: :delete
+    - else
       %tr
-        %th
-          name
-        %th
-          description
-        %th
-          price
-    %tbody
-      %tr
-        %td
-          = @product.name
-        %td
-          = @product.description
-        %td
-          = @product.price
-        %td
-          =link_to 'Back', products_path
-        %td
-          =link_to 'Edit', edit_product_path(@product)
-        %td
-          =link_to 'Delete', product_path(@product), method: :delete
-  - else
-    %tr
-      %td.text-center{colspan:7} No user log history
+        %td.text-center{colspan:7} No user log history
