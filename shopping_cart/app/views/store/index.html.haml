@@ -2,10 +2,8 @@
   %h1 Products
   - if flash.present?
     - flash.each do |status, msg|
-      .row
-        .medium-9.columns.alert-box{ class: "#{status} radius", data:{ alert: '' } }
-          = msg
-          .right=link_to '&times;'.html_safe, '#', class: 'close'
+      .data-alert{ class: "alert-box #{status} radius" }= msg 
+      .a.close{href:"#"} &times;
   %table
     %thead
       %tr
@@ -21,7 +19,7 @@
         %tbody
           %tr
             %td 
-              =link_to image_tag(product.image.url), product
+              /=image_tag product.image_url
             %td
               =link_to product.name, product
             %td

@@ -16,8 +16,8 @@
         .medium-4=f.text_field :price
       %p
         .label='Image'
-        .medium-4=f.text_field :image_url
+        .medium-4=f.file_field :image
 
-      %button.tiny.submit='Create'
+      %button.submit='Create'
 
   %p=link_to 'Back', products_path

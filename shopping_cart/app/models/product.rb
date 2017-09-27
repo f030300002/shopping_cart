@@ -9,6 +9,8 @@ class Product < ApplicationRecord
                       with: %r{\A(git|jpg|jpeg|png)\z}i,
                       message: 'must be a URL for GIF, JPG, JPEG or PNG image'
                       /
+  has_attached_file :image
+  validates_attachment :image, content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] }
   validate :price_must_be_at_least_a_dollar
 
   private
