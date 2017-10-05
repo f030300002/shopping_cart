@@ -1,3 +1,4 @@
+= render './header'
 .panel
   %h1 Product
   - if flash.present?
@@ -6,31 +7,66 @@
         .medium-8.columns.alert-box{ class: "#{status} radius", data:{ alert: '' } }
           = msg
           .right=link_to '&times;'.html_safe, '#', class: 'close'
-
   %table
-    - if @product.present?
-      %thead
-        %tr
-          %th
-            name
-          %th
-            description
-          %th
-            price
-      %tbody
-        %tr
-          %td
-            = @product.name
-          %td
-            = @product.description
-          %td
-            = @product.price
-          %td
-            =link_to 'Back', products_path
-          %td
-            =link_to 'Edit', edit_product_path(@product)
-          %td
-            =link_to 'Delete', product_path(@product), method: :delete
-    - else
+    %thead
       %tr
-        %td.text-center{colspan:7} No user log history
+        %th
+        %th
+          name
+        %th
+          description
+        %th
+          price
+    %tbody
+      %tr
+        %td
+          = image_tag(@product.image_url) if @product.image_file_name.present?
+        %td
+          = @product.name
+        %td
+          = @product.description
+        %td
+          = @product.price
+        %td
+          #try-desc
+        %td
+          =link_to 'Back', products_path
+        %td
+          =link_to 'Edit', edit_product_path(@product)
+        %td
+          =link_to 'Delete', product_path(@product), method: :delete
+    .right
+      =link_to 'Show Description', '', class: 'button radius tiny show-description-button'
+      =link_to 'JS Show Description', '', class: 'button radius tiny js-show-description-button'
+
+#params-panel-modal.reveal-modal.xlarge{"data-options" => "close_on_background_click:false;close_on_esc:false", "data-reveal" => "", "aria-labelledby" => "modalTitle", "aria-hidden" => "true", "role" => "dialog"}
+  .row
+    .medium-8.columns
+      = text_area_tag "copy_url", "#{@product.description}", rows: 4, class: 'small-margin-bottom-5', readonly: true, id: 'copy-textarea-copy'
+    .medium-4.columns
+      =link_to 'Copy', '', class: 'button radius tiny copy-content-button'
+  .close-reveal-modal{:"aria-label" => "Close"} &#215;
+
+:javascript
+  $(document).on('click', '.show-description-button', function(e){
+    $("#params-panel-modal").foundation("reveal", "open");
+    e.preventDefault();
+  });
+
+  $('#params-panel-modal').on('click', '.copy-content-button', function(e){
+    document.getElementById('copy-textarea-copy').select();
+    document.execCommand('copy');
+    e.preventDefault();
+  });
+
+  $(".js-show-description-button").click(function(e){
+    $("#try-desc").text("test js show desc");
+    e.preventDefault();
+  });
+
+
+
+
+
+
+

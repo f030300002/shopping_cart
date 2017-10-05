@@ -1,0 +1,31 @@
+= render './header'
+.panel
+  %h1 Users 
+  - if flash.present?
+    - flash.each do |status, msg|
+      .row
+        .medium-9.columns.alert-box{ class: "#{status} radius", data:{ alert: '' } }
+          = msg
+          .right=link_to '&times;'.html_safe, '#', class: 'close'
+  - if @users.present?
+    %table
+      %thead
+        %tr
+          %th
+            name
+          %th
+            email
+        - @users.each do |user|
+          %tbody
+            %tr
+              %td
+                =link_to user.name, user
+              %td
+                = user.email
+              %td=link_to 'Show', user
+              %td=link_to 'Edit', edit_user_path(user)
+              %td=link_to 'Delete', user_path(user), method: :delete
+  - else
+    %tr
+      %td.text-center{colspan:7} No users
+=link_to 'Sign Up', signup_path

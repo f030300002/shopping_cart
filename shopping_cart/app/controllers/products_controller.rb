@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
 
   def index
-    @products = Product.all.order(:id)
+    @products = Product.find_products
   end
 
   def new
@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
       flash[:success] = 'create product succeed!'
       redirect_to product_path @product
     else
-      flash[:fail] = 'create product failed!'
+      flash[:warning] = 'create product failed!'
       render 'new'
     end
   end
@@ -22,7 +22,7 @@ class ProductsController < ApplicationController
   def show
     @product = Product.find(params_id)
   end
-
+ 
   def edit
     @product = Product.find(params_id)
   end
@@ -33,7 +33,7 @@ class ProductsController < ApplicationController
       flash[:success] = 'update product succeed!'
       redirect_to product_path @product
     else
-      flash[:fail] = 'update product failed!'
+      flash[:warning] = 'update product failed!'
       render 'edit'
     end
   end

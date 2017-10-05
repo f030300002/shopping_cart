@@ -1,3 +1,4 @@
+= render './header'
 .panel
   %h1 Products
   - if flash.present?
@@ -6,32 +7,33 @@
         .medium-9.columns.alert-box{ class: "#{status} radius", data:{ alert: '' } }
           = msg
           .right=link_to '&times;'.html_safe, '#', class: 'close'
-  %table
-    %thead
-      %tr
-        %th{width:50}
-        %th
-          name
-        %th
-          description
-        %th
-          price
-    - if @products.present?
-      - @products.each do |product|
-        %tbody
-          %tr
-            %td 
-              =link_to image_tag(product.image.url), product
-            %td
-              =link_to product.name, product
-            %td
-              = product.description
-            %td
-              = product.price
-            %td=link_to 'Show', product
-            %td=link_to 'Edit', edit_product_path(product)
-            %td=link_to 'Delete', product_path(product), method: :delete
-    - else
-      %tr
-        %td.text-center{colspan:7} No user log history
-  =link_to 'Create New Product', new_product_path
+  - if @products.present?
+    %table
+      %thead
+        %tr
+          %th{width:50}
+          %th
+            name
+          %th
+            description
+          %th
+            price
+        - @products.each do |product|
+          %tbody
+            %tr
+              %td 
+                =link_to image_tag(product.thumbnail_url), product if product.image_file_name.present?
+                /%td.img-30= link_to image_tag(admin_user.thumbnail_url), edit_admin_user_path(admin_user) if admin_user.image_file_name.present?
+              %td
+                =link_to product.name, product
+              %td
+                = product.description
+              %td
+                = product.price
+              %td=link_to 'Show', product
+              %td=link_to 'Edit', edit_product_path(product)
+              %td=link_to 'Delete', product_path(product), method: :delete
+  - else
+    %tr
+      %td.text-center{colspan:7} No products
+=link_to 'Create New Product', new_product_path
